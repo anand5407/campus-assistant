@@ -6,47 +6,47 @@ import { CampusMap } from './components/CampusMap';
 const campusLocations = [
   {
     id: 'block-a',
-    name: 'Block A (B.Tech)',
-    description: 'Main academic block for B.Tech students. Houses multiple departments and modern laboratories.',
-    departments: ['Computer Science', 'Electronics', 'Mechanical Engineering'],
-    timings: '8:00 AM - 6:00 PM',
+    name: 'Block A',
+    description: 'Block A provides higher education courses such as: Bachelor of Technology (B.Tech), Master of Business Administration (MBA), Master of Computer Applications (MCA). It houses departments like Computer Science and Engineering (CSE), Electronics and Communication Engineering (ECE), Electrical and Electronics Engineering (EEE), Mechanical Engineering, Civil Engineering, and Master of Business Administration.',
+    departments: ['Computer Science and Engineering (CSE)', 'Electronics and Communication Engineering (ECE)', 'Electrical and Electronics Engineering (EEE)', 'Mechanical Engineering', 'Civil Engineering', 'Master of Business Administration (MBA)'],
+    timings: '8:00 AM to 4:00 PM',
     type: 'academic'
   },
   {
     id: 'block-b',
-    name: 'Block B (Diploma)',
-    description: 'Diploma courses building with well-equipped classrooms and workshops.',
-    departments: ['Diploma Engineering', 'Technical Courses'],
-    timings: '8:00 AM - 5:00 PM',
+    name: 'Block B',
+    description: 'Block B offers Diploma courses in the following branches: Civil Engineering, Mechanical Engineering, Electrical Engineering, Electronics and Telecommunication Engineering, and Computer Science. It houses departments for Civil, Mechanical, Electrical, Electronics and Telecommunication, and Computer Science.',
+    departments: ['Civil Engineering', 'Mechanical Engineering', 'Electrical Engineering', 'Electronics and Telecommunication Engineering', 'Computer Science'],
+    timings: '8:00 AM to 4:00 PM',
     type: 'academic'
   },
   {
     id: 'block-c',
-    name: 'Block C (Nursing)',
-    description: 'Nursing college building with medical labs and training facilities.',
-    departments: ['Nursing', 'Healthcare'],
-    timings: '8:00 AM - 6:00 PM',
+    name: 'Block C',
+    description: 'Block C provides the following courses: Bachelor of Computer Applications (BCA), B.Sc Nursing, JNM, and +3 Programs. It houses departments for BCA, Nursing, and +3 programs.',
+    departments: ['Bachelor of Computer Applications (BCA)', 'B.Sc Nursing', 'JNM', '+3 Programs'],
+    timings: '8:00 AM to 4:00 PM',
     type: 'academic'
   },
   {
     id: 'boys-hostel',
-    name: 'Boys Hostel',
-    description: 'Residential facility for male students with modern amenities.',
-    timings: '24/7 Access',
+    name: "Boys' Hostel",
+    description: "The boys' hostel is a residential facility within the campus that provides accommodation for male students coming from different cities or states. It offers basic amenities such as furnished rooms, beds, study tables, electricity, water supply, and internet facilities. There is a common mess that provides daily meals, along with recreational areas for indoor games and group activities. The hostel ensures a safe and disciplined environment with rules and supervision by wardens.",
+    timings: '6:00 AM to 10:00 PM',
     type: 'residential'
   },
   {
     id: 'girls-hostel',
-    name: 'Girls Hostel',
-    description: 'Residential facility for female students with modern amenities and security.',
-    timings: '24/7 Access',
+    name: "Girls' Hostel",
+    description: "The girls' hostel is a residential facility within the campus that provides safe and comfortable accommodation for female students from different places. It is designed to offer a secure environment with proper supervision by wardens and strict safety rules. The hostel provides basic facilities such as furnished rooms, beds, study tables, clean washrooms, electricity, water supply, and a common mess that serves nutritious meals. Recreational spaces for indoor activities and group interaction are also available. Security measures like CCTV surveillance and restricted entry timings are maintained to ensure students' safety.",
+    timings: '6:00 AM to 10:00 PM',
     type: 'residential'
   },
   {
     id: 'ground',
-    name: 'Ground',
-    description: 'Sports ground for various outdoor activities, cricket, football, and athletics.',
-    timings: '6:00 AM - 8:00 PM',
+    name: 'College Ground',
+    description: 'The college ground is an open area within the campus used for sports, physical activities, and various events. It provides space for games like cricket, football, volleyball, and athletics. Students use the ground for regular practice, tournaments, physical education classes, and annual sports meets.',
+    timings: '8:00 AM to 4:00 PM',
     type: 'sports'
   },
   {
@@ -103,14 +103,13 @@ const campusLocations = [
     name: 'Center',
     description: 'Central point of the campus - common meeting area.',
     type: 'landmark'
-  }
-  ,
+  },
   {
     id: 'kalam',
-    name: 'Kalam Science College',
-    description: 'Kalam Science College (Junior Science College) with well-equipped science labs and classrooms.',
-    departments: ['Physics', 'Chemistry', 'Mathematics'],
-    timings: '8:30 AM - 4:30 PM',
+    name: 'Kalam Higher Secondary School',
+    description: 'Kalam Higher Secondary School provides higher secondary education in the Science stream. It houses departments for Mathematics, Physics, Chemistry, Biology, and Information Technology (IT).',
+    departments: ['Mathematics', 'Physics', 'Chemistry', 'Biology', 'Information Technology (IT)'],
+    timings: '8:00 AM to 4:00 PM',
     type: 'academic'
   }
 ];

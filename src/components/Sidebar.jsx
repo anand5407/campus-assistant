@@ -1,5 +1,5 @@
-import React from 'react';
-import { School, ChevronLeft, ChevronRight, MapPin, Clock, Building2 } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { School, ChevronLeft, ChevronRight, MapPin, Clock, Building2, Volume2, VolumeX } from 'lucide-react';
 
 export function Sidebar({
   locations,
@@ -8,6 +8,113 @@ export function Sidebar({
   collapsed,
   onToggleCollapse
 }) {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [voices, setVoices] = useState([]);
+  const autoSpeakRef = useRef(true);
+  const synthRef = useRef(null);
+
+  // Load available voices
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      setVoices(availableVoices);
+    };
+
+    loadVoices();
+    
+    // Chrome loads voices asynchronously
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    return () => {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  // Function to speak the location details
+  const speakLocationDetails = () => {
+    if (!selectedLocation) return;
+
+    // Cancel any ongoing speech
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+
+    // Build the text to speak
+    let textToSpeak = `You have selected ${selectedLocation.name}. `;
+    textToSpeak += `${selectedLocation.description}. `;
+    
+    if (selectedLocation.departments && selectedLocation.departments.length > 0) {
+      textToSpeak += `It houses departments of ${selectedLocation.departments.join(', ')}. `;
+    }
+    
+    if (selectedLocation.timings) {
+      textToSpeak += `The timings are ${selectedLocation.timings}. `;
+    }
+
+    textToSpeak += `This is a ${selectedLocation.type} location.`;
+
+    console.log('Speaking:', textToSpeak);
+
+    // Use speech synthesis
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    
+    // Try to get a working voice
+    if (voices.length > 0) {
+      const englishVoice = voices.find(v => v.lang.startsWith('en')) || voices[0];
+      utterance.voice = englishVoice;
+      console.log('Using voice:', englishVoice?.name || 'default');
+    }
+    
+    utterance.onstart = () => {
+      setIsSpeaking(true);
+    };
+    utterance.onend = () => {
+      setIsSpeaking(false);
+    };
+    utterance.onerror = (event) => {
+      console.error('Speech error:', event);
+      setIsSpeaking(false);
+    };
+
+    // Speak the text
+    try {
+      window.speechSynthesis.speak(utterance);
+    } catch (e) {
+      console.error('Speech synthesis error:', e);
+    }
+  };
+
+  // Auto-speak when location is selected
+  useEffect(() => {
+    if (selectedLocation && autoSpeakRef.current) {
+      const timer = setTimeout(() => {
+        speakLocationDetails();
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedLocation, voices]);
+
+  // Stop speaking when location changes
+  useEffect(() => {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+    }
+  }, [selectedLocation]);
+
+  const stopSpeaking = () => {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+    }
+  };
   return (
     <aside
       className={`bg-white shadow-xl transition-all duration-300 flex-shrink-0 relative ${
@@ -58,6 +165,23 @@ export function Sidebar({
           <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
             <MapPin className="w-5 h-5 text-green-600" />
             Location Details
+            {selectedLocation && (
+              <button
+                onClick={isSpeaking ? stopSpeaking : speakLocationDetails}
+                className={`ml-auto p-2 rounded-full transition-colors ${
+                  isSpeaking 
+                    ? 'bg-red-100 text-red-600 animate-pulse' 
+                    : 'bg-green-100 text-green-600 hover:bg-green-200'
+                }`}
+                title={isSpeaking ? 'Stop reading' : 'Read aloud'}
+              >
+                {isSpeaking ? (
+                  <VolumeX className="w-4 h-4" />
+                ) : (
+                  <Volume2 className="w-4 h-4" />
+                )}
+              </button>
+            )}
           </h2>
 
           {selectedLocation ? (
